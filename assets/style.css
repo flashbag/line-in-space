@@ -1,0 +1,175 @@
+/* line 3, sass/style.sass */
+body {
+  font-family: "Scada", sans-serif;
+  background-color: #f0f0f0;
+  margin: 0px;
+  overflow: hidden;
+}
+
+/* line 9, sass/style.sass */
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 13, sass/style.sass */
+.clear {
+  clear: both;
+}
+
+/* line 16, sass/style.sass */
+#controls {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: white;
+  color: black;
+  min-height: 100px;
+  min-width: 300px;
+  padding: 8px;
+  -webkit-box-shadow: 10px 7px 67px 5px rgba(0, 0, 0, 0.72);
+  -moz-box-shadow: 10px 7px 67px 5px rgba(0, 0, 0, 0.72);
+  box-shadow: 10px 7px 67px 5px rgba(0, 0, 0, 0.72);
+}
+/* line 28, sass/style.sass */
+#controls h1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+/* line 33, sass/style.sass */
+#controls .dots .dot-name {
+  display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+  float: left;
+  width: 46%;
+  font-size: 18pt;
+  background: #f3f3f3;
+  margin: 2%;
+  border: 1px solid #f3f3f3;
+}
+/* line 43, sass/style.sass */
+#controls .dots .dot-name:hover, #controls .dots .dot-name.active {
+  background: #eeeeee;
+  border: 1px solid black;
+}
+/* line 46, sass/style.sass */
+#controls .dots .dot-name.active {
+  background: white;
+}
+/* line 48, sass/style.sass */
+#controls .dots .dot-controls {
+  display: none;
+  border: 1px solid black;
+  padding: 20px;
+  padding-left: 37px;
+  padding-right: 37px;
+  padding-top: 10px;
+  margin-top: 7px;
+  max-width: 100%;
+  overflow: hidden;
+}
+/* line 58, sass/style.sass */
+#controls .dots .dot-controls .name {
+  position: relative;
+  top: 17px;
+  right: 17px;
+}
+/* line 62, sass/style.sass */
+#controls .dots .dot-controls .value {
+  position: relative;
+  left: 104%;
+  top: -17px;
+}
+/* line 66, sass/style.sass */
+#controls .dots .dot-controls:before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  margin-top: -19px;
+  display: block;
+  position: absolute;
+  background: white;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  box-shadow: inset 0 1px 0 white;
+  transform: rotate(-45deg);
+}
+/* line 78, sass/style.sass */
+#controls .dots .dot-controls.dot-controls-a:before {
+  margin-left: 29px;
+}
+/* line 80, sass/style.sass */
+#controls .dots .dot-controls.dot-controls-b:before {
+  margin-left: 179px;
+}
+/* line 82, sass/style.sass */
+#controls .dots .dot-controls input {
+  width: 50px;
+}
+
+/* line 87, sass/style.sass */
+.dot-controls .name {
+  top: 12px !important;
+}
+
+/* line 89, sass/style.sass */
+.dot-controls .value {
+  top: -12px !important;
+}
+
+/* line 91, sass/style.sass */
+.noUi-horizontal {
+  height: 5px;
+}
+/* line 93, sass/style.sass */
+.noUi-horizontal .noUi-handle {
+  width: 20px;
+  height: 15px;
+  left: -17px;
+  top: -6px;
+  background: #888888;
+  box-shadow: none;
+  border: 1px solid #888888;
+}
+/* line 101, sass/style.sass */
+.noUi-horizontal .noUi-handle:before, .noUi-horizontal .noUi-handle:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 8px;
+  width: 1px;
+  background: #e8e7e6;
+  left: 6px;
+  top: 3px;
+}
+/* line 110, sass/style.sass */
+.noUi-horizontal .noUi-handle:after {
+  left: 12px;
+}
+
+/* line 115, sass/style.sass */
+#ax .noUi-handle, #bx .noUi-handle {
+  border-color: red;
+  background: red;
+}
+
+/* line 118, sass/style.sass */
+#ay .noUi-handle, #by .noUi-handle {
+  border-color: blue;
+  background: blue;
+}
+
+/* line 121, sass/style.sass */
+#az .noUi-handle, #bz .noUi-handle {
+  border-color: lime;
+  background: lime;
+}
+
+/* line 125, sass/style.sass */
+.slider-wrapper {
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+}
