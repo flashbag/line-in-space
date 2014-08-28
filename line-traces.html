@@ -21,20 +21,16 @@
 <body>
 
 	<div id="controls">
-		<!-- <div>Drag to spin the cube</div> -->
 		<h1>Line Traces 3D</h1>
 
 		<div class="dots">
 			<div>
 				<span class="dot-name" data-class="dot-controls-a">A</span>
 			</div>
-
 			<div>
 				<span class="dot-name" data-class="dot-controls-b">B</span>
 			</div>
-
 			<div class="clear"></div>
-
 			<div class="dot-controls dot-controls-a">
 				<span class="name">X</span><div id="ax"></div><span class="value" id="ax-value"></span><div class="clear"></div>
 				<span class="name">Y</span><div id="ay"></div><span class="value" id="ay-value"></span><div class="clear"></div>
@@ -45,147 +41,18 @@
 				<span class="name">Y</span><div id="by"></div><span class="value" id="by-value"></span><div class="clear"></div>
 				<span class="name">Z</span><div id="bz"></div><span class="value" id="bz-value"></span><div class="clear"></div>
 			</div>
-
 		</div>
-<!-- 		<div class="dots-controls">
-			<div class="slider">
-				<div class="slider-wrapper">
-					<input type="text" class="js-min-max-start" />
-				</div>
-				<div class="slider-value"></div>
-			</div>
-		</div> -->
 		<span class="info"></span>
 	</div>
 
-	
-	<script>
+<!--
 
+// А(90;75;10) and B(30;50;45).
 
-		var scene = new THREE.Scene();
-		scene.fog = new THREE.FogExp2( 0xcccccc, 0.002 );
-		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.5, 1000 );
+x = x1 + ax * H
+y = y1 + ay * H
+z = z1 + az * H
 
-		var geometry = new THREE.BoxGeometry(-1,2,1);
-		var material = new THREE.MeshBasicMaterial({
-			color: 0x00ff00
-		});
-		var cube = new THREE.Mesh(geometry, material);
-
-		cube.position.set(1,5,1);
-		scene.add(cube);
-
-		camera.position.set(5,5,5);
-
-		var controls = new THREE.OrbitControls( camera );
-
-
-
-
-		// controls.addEventListener( 'change', render );1
-
-		var material = new THREE.LineBasicMaterial({
-			color: 0x0000ff
-		});
-
-		var geometry = new THREE.Geometry();
-		geometry.vertices.push(
-			new THREE.Vector3( -10.5, 0, 0 ),
-			new THREE.Vector3( 0, 10, -10 ),
-			new THREE.Vector3( 10, -20, 0 )
-			);
-
-		var line = new THREE.Line( geometry, material );
-		scene.add( line );
-
-
-
-		var renderer = new THREE.WebGLRenderer();
-		renderer.setClearColor( 0xd0d0d0 );
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		document.body.appendChild(renderer.domElement);scene.fog = new THREE.FogExp2( 0xcccccc, 0.002 );
-
-
-
-		function buildAxis( src, dst, colorHex, sub) {
-			var geom = new THREE.Geometry();
-			var mat = new THREE.LineBasicMaterial({ linewidth: (sub ? 1 : 2), color: colorHex });
-
-			geom.vertices.push( src.clone() );
-			geom.vertices.push( dst.clone() );
-		    geom.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
-
-		    var axis = new THREE.Line( geom, mat, THREE.LinePieces );
-
-		    return axis;
-
-		}
-
-		function buildAxes( length ) {
-			var axes = new THREE.Object3D();
-		    // X is RED
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( length, 0, 0 ), 0xFF0000 ) ); // +X
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( -length, 0, 0 ), 0xFF0000 ) ); // -X
-
-		    // Y is GREEN
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, length, 0 ), 0x00FF00 ) ); // +Y
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, -length, 0 ), 0x00FF00 ) ); // -Y
-		    // Z is BLUE
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, length ), 0x0000FF ) ); // +Z
-		    axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, -length ), 0x0000FF ) ); // -Z
-
-
-		    return axes;
-		}
-
-		function buildSubAxes(length, step) {
-			var axes = new THREE.Object3D();
-
-			step = step ? step : 5;
-
-			var color = 0x868686;
-
-			for (var i = -length; i <= length; i = i + step) {
-				if (i !== 0) {
-					// plane P, Z and X change
-					axes.add( buildAxis( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
-					axes.add( buildAxis( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
-
-					// plane F - Z and Y change
-					axes.add( buildAxis( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
-					axes.add( buildAxis( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
-
-					// plane H - X and Y change
-					axes.add( buildAxis( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
-					axes.add( buildAxis( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
-				}
-			}
-
-			return axes;
-		}
-
-		var axes = buildAxes ( 1000 );
-		var subAxes = buildSubAxes ( 50 );
-
-		scene.add( axes );
-		scene.add( subAxes );
-
-		function render() {
-			requestAnimationFrame(render);
-			renderer.render(scene, camera);
-		}
-		render();
-
-		// var render = function () {
-		// 	requestAnimationFrame(render);
-
-		// 	cube.rotation.x += 0.1;
-		// 	cube.rotation.y += 0.1;
-
-			// renderer.render(scene, camera);
-		// };
-
-		// render();
-	</script>
+-->
 </body>
 </html>
