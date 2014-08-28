@@ -90,30 +90,6 @@ var line = {
 	},
 	_vector: function() {
 
-		// x = x1 + ax * H
-		// y = y1 + ay * H
-		// z = z1 + az * H
-
-		// ax * H = x - x1
-		// H = ( x - x1 ) / ax
-
-		// 90 = 30 + ax * H
-		// 75 = 50 + ax * H
-		// 10 = 45 + ax * H
-
-		// ax * H = 90 - 30
-		// ay * H = 75 - 30
-		// az * H = 45 - 10
-
-		// ax * H = 60
-		// ay * H = 45
-		// az * H = 35
-
-		// ax * H = 60
-		// ay * H = 45
-		// az * H = 35
-
-		// calculate line vector
 		line.vector.x = dots.b.x - dots.a.x;
 		line.vector.y = dots.b.y - dots.a.y;
 		line.vector.z = dots.b.z - dots.a.z;
@@ -125,9 +101,6 @@ var line = {
 		line._lineNullZ();
 	},
 	_lineNullX: function() {
-		// X = x + ax * H
-		// Y = y + ay * H
-		// Z = z + az * H
 
 		var hammaX = (dots.a.x * -1) / line.vector.x;
 
@@ -135,32 +108,13 @@ var line = {
 			y = dots.a.y + line.vector.y * hammaX,
 			z = dots.a.z + line.vector.z * hammaX;
 
-
 		if (line.lineInstanceNullX)
 			scene.remove(line.lineInstanceNullX);
 
-		var geometry = new THREE.Geometry();
-
-		var material = new THREE.LineBasicMaterial({
-			color: 0x19718A,
-			linewidth: 1.5
-		});
-
-		geometry.vertices.push(
-			new THREE.Vector3( dots.a.x, dots.a.y, dots.a.z ),
-			new THREE.Vector3( x, y, z )
-		);
-
-		line.lineInstanceNullX = new THREE.Line( geometry, material );
+		line.lineInstanceNullX = line._lineNullBuild(x, y, z);
 		scene.add(line.lineInstanceNullX);
-
-		// y1 = y - ( ay * H )
-		// z1 = z - ( az * H )
 	},
 	_lineNullY: function() {
-		// X = x + ax * H
-		// Y = y + ay * H
-		// Z = z + az * H
 
 		var hammaY = (dots.a.y * -1) / line.vector.y;
 
@@ -168,32 +122,13 @@ var line = {
 			y = 0,
 			z = dots.a.z + line.vector.z * hammaY;
 
-
 		if (line.lineInstanceNullY)
 			scene.remove(line.lineInstanceNullY);
 
-		var geometry = new THREE.Geometry();
-
-		var material = new THREE.LineBasicMaterial({
-			color: 0x19718A,
-			linewidth: 1.5
-		});
-
-		geometry.vertices.push(
-			new THREE.Vector3( dots.a.x, dots.a.y, dots.a.z ),
-			new THREE.Vector3( x, y, z )
-		);
-		
-		line.lineInstanceNullY = new THREE.Line( geometry, material );
+		line.lineInstanceNullY = line._lineNullBuild(x, y, z);
 		scene.add(line.lineInstanceNullY);
-
-		// y1 = y - ( ay * H )
-		// z1 = z - ( az * H )
 	},
 	_lineNullZ: function() {
-		// X = x + ax * H
-		// Y = y + ay * H
-		// Z = z + az * H
 
 		var hammaZ = (dots.a.z * -1) / line.vector.z;
 
@@ -201,8 +136,13 @@ var line = {
 			y = dots.a.y + line.vector.y * hammaZ,
 			z = 0;
 
-		if (line.lineInstanceZ)
-			scene.remove(line.lineInstanceZ);
+		if (line.lineInstanceNullZ)
+			scene.remove(line.lineInstanceNullZ);
+
+		line.lineInstanceNullZ = line._lineNullBuild(x, y, z);
+		scene.add(line.lineInstanceNullZ);
+	},
+	_lineNullBuild: function(x, y, z) {
 
 		var geometry = new THREE.Geometry();
 
@@ -215,13 +155,9 @@ var line = {
 			new THREE.Vector3( dots.a.x, dots.a.y, dots.a.z ),
 			new THREE.Vector3( x, y, z )
 		);
-		
-		line.lineInstanceZ = new THREE.Line( geometry, material );
-		scene.add(line.lineInstanceZ);
 
-		// y1 = y - ( ay * H )
-		// z1 = z - ( az * H )
-	},
+		return new THREE.Line( geometry, material );
+	}
 }
 
 var axes = {
@@ -302,8 +238,7 @@ var axes = {
 			}
 		}
 		scene.add( axes.subAxesInstance );
-	},
-	
+	},	
 };
 
 
@@ -312,10 +247,9 @@ $(function() {
 
 	init();
 
-
-	axes.build();
-	line.build()
 	dots.build();
+	line.build()
+	axes.build();
 
 	render();
 
