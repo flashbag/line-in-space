@@ -1,4 +1,4 @@
-/* line 3, sass/style.sass */
+/* line 3, style.sass */
 body {
   font-family: "Scada", sans-serif;
   background-color: #f0f0f0;
@@ -6,18 +6,18 @@ body {
   overflow: hidden;
 }
 
-/* line 9, sass/style.sass */
+/* line 9, style.sass */
 canvas {
   width: 100%;
   height: 100%;
 }
 
-/* line 13, sass/style.sass */
+/* line 13, style.sass */
 .clear {
   clear: both;
 }
 
-/* line 16, sass/style.sass */
+/* line 16, style.sass */
 #controls {
   position: absolute;
   top: 15px;
@@ -31,13 +31,13 @@ canvas {
   -moz-box-shadow: 10px 7px 67px 5px rgba(0, 0, 0, 0.72);
   box-shadow: 10px 7px 67px 5px rgba(0, 0, 0, 0.72);
 }
-/* line 28, sass/style.sass */
+/* line 28, style.sass */
 #controls h1 {
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
 }
-/* line 33, sass/style.sass */
+/* line 33, style.sass */
 #controls .dots .dot-name {
   display: inline-block;
   text-align: center;
@@ -49,16 +49,16 @@ canvas {
   margin: 2%;
   border: 1px solid #f3f3f3;
 }
-/* line 43, sass/style.sass */
+/* line 43, style.sass */
 #controls .dots .dot-name:hover, #controls .dots .dot-name.active {
   background: #eeeeee;
   border: 1px solid black;
 }
-/* line 46, sass/style.sass */
+/* line 46, style.sass */
 #controls .dots .dot-name.active {
   background: white;
 }
-/* line 48, sass/style.sass */
+/* line 48, style.sass */
 #controls .dots .dot-controls {
   display: none;
   border: 1px solid black;
@@ -70,19 +70,19 @@ canvas {
   max-width: 100%;
   overflow: hidden;
 }
-/* line 58, sass/style.sass */
+/* line 58, style.sass */
 #controls .dots .dot-controls .name {
   position: relative;
   top: 17px;
   right: 17px;
 }
-/* line 62, sass/style.sass */
+/* line 62, style.sass */
 #controls .dots .dot-controls .value {
   position: relative;
   left: 104%;
   top: -17px;
 }
-/* line 66, sass/style.sass */
+/* line 66, style.sass */
 #controls .dots .dot-controls:before {
   content: "";
   width: 15px;
@@ -96,34 +96,34 @@ canvas {
   box-shadow: inset 0 1px 0 white;
   transform: rotate(-45deg);
 }
-/* line 78, sass/style.sass */
+/* line 78, style.sass */
 #controls .dots .dot-controls.dot-controls-a:before {
   margin-left: 29px;
 }
-/* line 80, sass/style.sass */
+/* line 80, style.sass */
 #controls .dots .dot-controls.dot-controls-b:before {
   margin-left: 179px;
 }
-/* line 82, sass/style.sass */
+/* line 82, style.sass */
 #controls .dots .dot-controls input {
   width: 50px;
 }
 
-/* line 87, sass/style.sass */
+/* line 87, style.sass */
 .dot-controls .name {
   top: 12px !important;
 }
 
-/* line 89, sass/style.sass */
+/* line 89, style.sass */
 .dot-controls .value {
   top: -12px !important;
 }
 
-/* line 91, sass/style.sass */
+/* line 91, style.sass */
 .noUi-horizontal {
   height: 5px;
 }
-/* line 93, sass/style.sass */
+/* line 93, style.sass */
 .noUi-horizontal .noUi-handle {
   width: 20px;
   height: 15px;
@@ -133,7 +133,7 @@ canvas {
   box-shadow: none;
   border: 1px solid #888888;
 }
-/* line 101, sass/style.sass */
+/* line 101, style.sass */
 .noUi-horizontal .noUi-handle:before, .noUi-horizontal .noUi-handle:after {
   content: "";
   display: block;
@@ -144,30 +144,30 @@ canvas {
   left: 6px;
   top: 3px;
 }
-/* line 110, sass/style.sass */
+/* line 110, style.sass */
 .noUi-horizontal .noUi-handle:after {
   left: 12px;
 }
 
-/* line 115, sass/style.sass */
+/* line 115, style.sass */
 #ax .noUi-handle, #bx .noUi-handle {
-  border-color: red;
-  background: red;
+  border-color: #bb0000;
+  background: #bb0000;
 }
 
-/* line 118, sass/style.sass */
+/* line 118, style.sass */
 #ay .noUi-handle, #by .noUi-handle {
-  border-color: blue;
-  background: blue;
+  border-color: #0000bb;
+  background: #0000bb;
 }
 
-/* line 121, sass/style.sass */
+/* line 121, style.sass */
 #az .noUi-handle, #bz .noUi-handle {
-  border-color: lime;
-  background: lime;
+  border-color: #00bb00;
+  background: #00bb00;
 }
 
-/* line 125, sass/style.sass */
+/* line 125, style.sass */
 .slider-wrapper {
   width: 80%;
   text-align: center;

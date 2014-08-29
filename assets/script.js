@@ -1,5 +1,15 @@
 // А(90;75;10) and B(30;50;45).
 
+THREE.Object3D.prototype.clear = function(){
+    var children = this.children;
+    for(var i = children.length-1;i>=0;i--){
+        var child = children[i];
+        child.clear();
+        this.removeChild(child);
+    };
+};
+
+
 var scene, camera, controls, renderer;
 
 var init = function() {
@@ -30,22 +40,27 @@ var render = function() {
 var dots = { 
 	a: {
 		x: 90,
-		z: 10,
-		y: 75
+		y: 75,
+		z: 10
 	},
 	b: {
 		x: 30,
-		z: 45,
-		y: 50
+		y: 50,
+		z: 45
 	},
-	instanceA: false,
-	instanceB: false,
+	planeFIntersection: {},
+	planeHIntersection: {},
+	planePIntersection: {},
 	build: function() {
-		if (dots.instanceA) scene.remove(dots.instanceA);
-		if (dots.instanceB) scene.remove(dots.instanceB);
-
+		dots._buildMainDots();
+		dots._buildMainDotsPlanesIntersections();
+	},
+	_buildMainDots: function() {
 		var geometry = new THREE.SphereGeometry( 0.75, 15, 15 );
 		var material = new THREE.MeshBasicMaterial( { color: 0x19718A } );
+
+		scene.remove( dots.instanceA );
+		scene.remove( dots.instanceB );
 
 		dots.instanceA = new THREE.Mesh( geometry, material );
 		dots.instanceA.position.set( dots.a.x, dots.a.y, dots.a.z);
@@ -55,24 +70,61 @@ var dots = {
 		scene.add( dots.instanceA );
 		scene.add( dots.instanceB );
 	},
+	_buildMainDotsPlanesIntersections: function() {
+		scene.remove(dots.instancePlaneFIntersection);
+		scene.remove(dots.instancePlaneHIntersection);
+		scene.remove(dots.instancePlanePIntersection);
+
+		var geometry = new THREE.SphereGeometry( 1, 15, 15 );
+		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
+
+		dots.instancePlaneFIntersection = new THREE.Mesh( geometry, material );
+		dots.instancePlaneFIntersection.position.set( dots.planeFIntersection.x, dots.planeFIntersection.y, dots.planeFIntersection.z);
+		dots.instancePlaneHIntersection = dots.instancePlaneFIntersection.clone();
+		dots.instancePlaneHIntersection.position.set( dots.planeHIntersection.x, dots.planeHIntersection.y, dots.planeHIntersection.z);
+		dots.instancePlanePIntersection = dots.instancePlaneFIntersection.clone();
+		dots.instancePlanePIntersection.position.set( dots.planePIntersection.x, dots.planePIntersection.y, dots.planePIntersection.z);
+
+		scene.add( dots.instancePlaneFIntersection );
+		scene.add( dots.instancePlaneHIntersection );
+		scene.add( dots.instancePlanePIntersection );
+	},
+	_buildMainDotsPlanesProjections: function(){
+
+		scene.remove(dots.dotAPlaneFProjection);
+		scene.remove(dots.dotAPlaneHProjection);
+		scene.remove(dots.dotAPlanePProjection);
+
+		scene.remove(dots.dotBPlaneFProjection);
+		scene.remove(dots.dotBPlaneHProjection);
+		scene.remove(dots.dotBPlanePProjection);
+
+		var geometry = new THREE.SphereGeometry( 0.5, 20, 20 );
+		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
+
+		dots.dotAPlaneFProjection = new THREE.Mesh( geometry, material );
+		dots.dotAPlaneFProjection.position.set( 0, dots.a.y, dots.a.z);
+		dots.dotBPlaneFProjection = dots.dotAPlaneFProjection.clone();
+		dots.dotBPlaneFProjection.position.set( dots.a.x, 0, dots.a.z);
+		dots.instanceZNull = dots.dotAPlaneFProjection.clone();
+		dots.instanceZNull.position.set( dots.planePIntersection.x, dots.planePIntersection.y, dots.planePIntersection.z);
+
+		scene.add( dots.instanceXNull );
+		scene.add( dots.instanceYNull );
+		scene.add( dots.instanceZNull );
+	}
 };
 
 var line = {
-	lineInstance: false,
-	lineInstanceNullX: false,
-	lineInstanceNullY: false,
-	lineInstanceZ: false,
-	vector: {
-		x: false,
-		y: false,
-		z: false,
-		hamma : false
-	},
+	vector: {},
 	build: function() {
 		if (line.lineInstance)
 			scene.remove(line.lineInstance);
 
-		line._vector();
+		line._calculateLineVector();
+		line._buildPlaneFIntersection();
+		line._buildPlaneHIntersection();
+		line._buildPlanePIntersection();
 
 		var geometry = new THREE.Geometry();
 
@@ -88,61 +140,57 @@ var line = {
 		line.lineInstance = new THREE.Line( geometry, material );
 		scene.add(line.lineInstance);
 	},
-	_vector: function() {
+	_calculateLineVector: function() {
 
 		line.vector.x = dots.b.x - dots.a.x;
 		line.vector.y = dots.b.y - dots.a.y;
 		line.vector.z = dots.b.z - dots.a.z;
 
 		line.vector.hamma = (dots.a.x - dots.b.x) / line.vector.x;
-
-		line._lineNullX();
-		line._lineNullY();
-		line._lineNullZ();
 	},
-	_lineNullX: function() {
+	_buildPlaneFIntersection: function() {
 
 		var hammaX = (dots.a.x * -1) / line.vector.x;
 
-		var x = 0,
-			y = dots.a.y + line.vector.y * hammaX,
-			z = dots.a.z + line.vector.z * hammaX;
+		dots.planeFIntersection.x = 0;
+		dots.planeFIntersection.y = dots.a.y + line.vector.y * hammaX;
+		dots.planeFIntersection.z = dots.a.z + line.vector.z * hammaX;
 
 		if (line.lineInstanceNullX)
 			scene.remove(line.lineInstanceNullX);
 
-		line.lineInstanceNullX = line._lineNullBuild(x, y, z);
+		line.lineInstanceNullX = line._buildPlaneIntersection(dots.planeFIntersection.x, dots.planeFIntersection.y, dots.planeFIntersection.z);
 		scene.add(line.lineInstanceNullX);
 	},
-	_lineNullY: function() {
+	_buildPlaneHIntersection: function() {
 
 		var hammaY = (dots.a.y * -1) / line.vector.y;
 
-		var x = dots.a.x + line.vector.x * hammaY,
-			y = 0,
-			z = dots.a.z + line.vector.z * hammaY;
+		dots.planeHIntersection.y = 0;
+		dots.planeHIntersection.x = dots.a.x + line.vector.x * hammaY;
+		dots.planeHIntersection.z = dots.a.z + line.vector.z * hammaY;
 
 		if (line.lineInstanceNullY)
 			scene.remove(line.lineInstanceNullY);
 
-		line.lineInstanceNullY = line._lineNullBuild(x, y, z);
+		line.lineInstanceNullY = line._buildPlaneIntersection(dots.planeHIntersection.x, dots.planeHIntersection.y, dots.planeHIntersection.z);
 		scene.add(line.lineInstanceNullY);
 	},
-	_lineNullZ: function() {
+	_buildPlanePIntersection: function() {
 
 		var hammaZ = (dots.a.z * -1) / line.vector.z;
 
-		var x = dots.a.x + line.vector.x * hammaZ,
-			y = dots.a.y + line.vector.y * hammaZ,
-			z = 0;
-
+		dots.planePIntersection.z = 0;
+		dots.planePIntersection.x = dots.a.x + line.vector.x * hammaZ;
+		dots.planePIntersection.y = dots.a.y + line.vector.y * hammaZ;
+			
 		if (line.lineInstanceNullZ)
 			scene.remove(line.lineInstanceNullZ);
 
-		line.lineInstanceNullZ = line._lineNullBuild(x, y, z);
+		line.lineInstanceNullZ = line._buildPlaneIntersection(dots.planePIntersection.x, dots.planePIntersection.y, dots.planePIntersection.z);
 		scene.add(line.lineInstanceNullZ);
 	},
-	_lineNullBuild: function(x, y, z) {
+	_buildPlaneIntersection: function(x, y, z) {
 
 		var geometry = new THREE.Geometry();
 
@@ -170,13 +218,11 @@ var axes = {
 	z: {
 		color: 0x00BB00
 	},
-	mainAxesInstance: false,
-	subAxesInstance: false,
 	build: function() {
-		axes._buildMain();
-		axes._buildSub();
+		axes._buildMainAxes();
+		axes._buildHelperAxes();
 	},
-	_getOne: function( src, dst, colorHex, sub) {
+	_buildOneAxe: function( src, dst, colorHex, sub) {
 		var geom = new THREE.Geometry();
 		var mat = new THREE.LineBasicMaterial({ linewidth: (sub ? 1 : 2), color: colorHex });
 
@@ -188,7 +234,7 @@ var axes = {
 
 	    return axis;
 	},
-	_buildMain: function( length) {
+	_buildMainAxes: function( length) {
 
 		if (axes.mainAxesInstance) 
 			scene.remove(axes.mainAxesInstance);
@@ -199,42 +245,42 @@ var axes = {
 
 		var nullPoint = new THREE.Vector3( 0, 0, 0 );
 
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
 
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
 
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
-	    axes.mainAxesInstance.add( axes._getOne( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
+	    axes.mainAxesInstance.add( axes._buildOneAxe( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
 
 	    scene.add( axes.mainAxesInstance );
 	},
-	_buildSub: function(length, step) {
+	_buildHelperAxes: function(length, step) {
 		
 		if (axes.subAxesInstance) 
 			scene.remove(axes.subAxesInstance);
 
 		axes.subAxesInstance = new THREE.Object3D();
 
-		length = length ? length : 140;
-		step = step ? step : 20;
+		length = length ? length : 200;
+		step = step ? step : 25;
 
 		var color = 0x868686;
 
 		for (var i = -length; i <= length; i = i + step) {
 			if (i !== 0) {
 				// plane P, Z and X change
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
 
 				// plane F - Z and Y change
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
 
 				// plane H - X and Y change
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
-				axes.subAxesInstance.add( axes._getOne( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
+				axes.subAxesInstance.add( axes._buildOneAxe( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
 			}
 		}
 		scene.add( axes.subAxesInstance );
@@ -247,9 +293,9 @@ $(function() {
 
 	init();
 
-	dots.build();
-	line.build()
 	axes.build();
+	line.build();
+	dots.build();
 
 	render();
 
