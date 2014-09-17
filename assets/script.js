@@ -148,6 +148,7 @@ var line = {
 		line._createPTrace();
 		line._createDotsPlanesProjections();
 		line._createLinePlanesProjections();
+		line._createTraces2AxesProjectionsLines();
 	},
 	_createMainLine: function(){
 		var geometry = new THREE.Geometry();
@@ -256,19 +257,33 @@ var line = {
 		line.__setLinePlaneProjections([line.__instance__lBdF, line.__instance__lBdH, line.__instance__lBdP ]);
 	},
 	_createDotsPlanesProjections: function() {
-		line.__instance__lAdFpHelper = line.__instance__lAdFpHelper || line.__createDot2PlaneProjectioHelper();
-		line.__instance__lAdHpHelper = line.__instance__lAdHpHelper || line.__createDot2PlaneProjectioHelper();
-		line.__instance__lAdPpHelper = line.__instance__lAdPpHelper || line.__createDot2PlaneProjectioHelper();
+		line.__instance__lAdFpHelper = line.__instance__lAdFpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line.__instance__lAdHpHelper = line.__instance__lAdHpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line.__instance__lAdPpHelper = line.__instance__lAdPpHelper || line.__createDot2PlaneProjectioHelper(4);
 
-		line.__instance__lBdFpHelper = line.__instance__lBdFpHelper || line.__createDot2PlaneProjectioHelper();
-		line.__instance__lBdHpHelper = line.__instance__lBdHpHelper || line.__createDot2PlaneProjectioHelper();
-		line.__instance__lBdPpHelper = line.__instance__lBdPpHelper || line.__createDot2PlaneProjectioHelper();
+		line.__instance__lBdFpHelper = line.__instance__lBdFpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line.__instance__lBdHpHelper = line.__instance__lBdHpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line.__instance__lBdPpHelper = line.__instance__lBdPpHelper || line.__createDot2PlaneProjectioHelper(4);
 
 		line.__setDotPlaneProjections(dots.a, [line.__instance__lAdFpHelper, line.__instance__lAdHpHelper, line.__instance__lAdPpHelper ]);
 		line.__setDotPlaneProjections(dots.b, [line.__instance__lBdFpHelper, line.__instance__lBdHpHelper, line.__instance__lBdPpHelper ]);
 	},
 	_createTraces2AxesProjectionsLines: function() {
 
+		line.__instance__lFtHpHelper = line.__instance__lFtHpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line.__instance__lFtPpHelper = line.__instance__lFtPpHelper || line.__createDot2PlaneProjectioHelper(2);	
+
+		line.__instance__lHtFpHelper = line.__instance__lHtFpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line.__instance__lHtPpHelper = line.__instance__lHtPpHelper || line.__createDot2PlaneProjectioHelper(2);
+
+		line.__instance__lPtFpHelper = line.__instance__lPtFpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line.__instance__lPtHpHelper = line.__instance__lPtHpHelper || line.__createDot2PlaneProjectioHelper(2);
+		
+		line.__setTrace2PlaneProjections(dots.Ft, [line.__instance__lFtHpHelper, line.__instance__lFtPpHelper]);
+		line.__setTrace2PlaneProjections(dots.Ht, [line.__instance__lHtFpHelper, line.__instance__lHtPpHelper]);
+		line.__setTrace2PlaneProjections(dots.Pt, [line.__instance__lPtFpHelper, line.__instance__lPtHpHelper]);
+
+		line.__setTraces2PlaneProjections();
 	},
 
 	__createPlaneIntersection: function() {
@@ -293,13 +308,17 @@ var line = {
 
 		return new THREE.Line( geometry, material);
 	},
-	__createDot2PlaneProjectioHelper: function(dot) {
+	__createDot2PlaneProjectioHelper: function(vectors) {
 
 		var geometry = new THREE.Geometry();
-		// var material = new THREE.LineDashedMaterial({ color: 0x000000, dashSize: 1, gapSize: 10, linewidth: 1.2 });
-		 var material = new THREE.LineDashedMaterial({ vertexColors: true, color: 0xff0000, dashSize: 3, gapSize: 1, scale: 0.1 });
+		var material = new THREE.LineDashedMaterial({ vertexColors: true, color: 0xff0000, dashSize: 3, gapSize: 1, scale: 0.1 });
 
-		geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ) );
+		if (vectors == 4)
+			geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ),new THREE.Vector3( 0, 0, 0 ) );
+		else if (vectors == 3)
+			geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ) );
+		else if (vectors == 2)
+			geometry.vertices.push( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, 0 ) );
 
 		return new THREE.Line( geometry, material);
 	},
@@ -377,6 +396,31 @@ var line = {
 				objects[obj].geometry.verticesNeedUpdate = true;
 			}
 		}
+	},
+	__setTrace2PlaneProjections: function(dot, objects) {
+		for (var obj in objects) {
+			for(i=0;i<objects[obj].geometry.vertices.length;i++) {
+				objects[obj].geometry.vertices[i].x = dot.x;
+				objects[obj].geometry.vertices[i].y = dot.y;
+				objects[obj].geometry.vertices[i].z = dot.z;
+
+				objects[obj].geometry.verticesNeedUpdate = true;
+			}
+		}
+	},
+	__setTraces2PlaneProjections: function() {
+		console.log(line.__instance__lFtHpHelper.geometry.vertices);
+		line.__instance__lFtHpHelper.geometry.vertices[0].y = 0;
+		// line.__instance__lFtHpHelper.y = 0;
+
+		// line.__instance__lPpIntersection.geometry.vertices[0].x = dots.a.x;
+		// line.__instance__lPpIntersection.geometry.vertices[0].y = dots.a.y;
+		// line.__instance__lPpIntersection.geometry.vertices[0].z = dots.a.z;
+
+		// line.__instance__lPpIntersection.geometry.vertices[1].x = dots.Pt.x;
+		// line.__instance__lPpIntersection.geometry.vertices[1].y = dots.Pt.y;
+		// line.__instance__lPpIntersection.geometry.vertices[1].z = dots.Pt.z;
+
 	}
 }
 
@@ -486,23 +530,24 @@ $(function() {
 	$.each(dots, function(dotName, coords){
 		$.each(coords, function(coordName, coordValue){
 			var id = '#' + dotName + coordName;
-			$(id).noUiSlider({
-				start: [ coordValue ],
-				step: 1,
-				range: {
-					'min': [  0 ],
-					'max': [ 100 ]
-				}
-			});
-
-			$(id).Link('lower').to($(id + '-value'), null, wNumb( { decimals: 0 } ) );
-
-			$(id).on('slide',function(){
-				var id = $(this).attr('id');
-				eval('dots.' + id.substr(0,1) + '.' + id.substr(1,1) + ' = ' + $(this).val() + ';');
-				line.build();
-				dots.build();
-			});
+			var $el = $(id);
+			if ($el.length) {
+				$el.noUiSlider({
+					start: [ coordValue ],
+					step: 1,
+					range: {
+						'min': [  0 ],
+						'max': [ 100 ]
+					}
+				})
+				.Link('lower').to($(id + '-value'), null, wNumb( { decimals: 0 } ) )
+				.on('slide',function(){
+					var id = $(this).attr('id');
+					eval('dots.' + id.substr(0,1) + '.' + id.substr(1,1) + ' = ' + $(this).val() + ';');
+					line.build();
+					dots.build();
+				});
+			}
 		});		
 	});
 
