@@ -1,3 +1,7 @@
+// ga.s_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
+
+if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
 var scene, camera, controls, renderer;
 
 var init = function() {
@@ -28,7 +32,7 @@ var render = function() {
 var draw = function(objectName) {
 	var object = eval(objectName);
 	for (var property in object) {
-	    if (object.hasOwnProperty(property) && !property.indexOf('__instance__')) {
+	    if (object.hasOwnProperty(property) && !property.indexOf('_obj_')) {
     		var instance = eval(objectName + '.' + property);
         	scene.add(instance);
 	    }
@@ -60,81 +64,81 @@ var dots = {
 		var geometry = new THREE.SphereGeometry( 0.75, 15, 15 );
 		var material = new THREE.MeshBasicMaterial( { color: 0x19718A } );
 
-		dots.__instance__Ad = dots.__instance__Ad || new THREE.Mesh( geometry, material );
-		dots.__instance__Bd = dots.__instance__Bd || new THREE.Mesh( geometry, material );
+		dots._obj_Ad = dots._obj_Ad || new THREE.Mesh( geometry, material );
+		dots._obj_Bd = dots._obj_Bd || new THREE.Mesh( geometry, material );
 
-		dots.__instance__Ad.position.set( dots.a.x, dots.a.y, dots.a.z);
-		dots.__instance__Bd.position.set( dots.b.x, dots.b.y, dots.b.z);
+		dots._obj_Ad.position.set( dots.a.x, dots.a.y, dots.a.z);
+		dots._obj_Bd.position.set( dots.b.x, dots.b.y, dots.b.z);
 	},
 	_createLineTraces: function() {
 
 		var geometry = new THREE.SphereGeometry( 1.5, 15, 15 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
 
-		dots.__instance__dFt = dots.__instance__dFt || new THREE.Mesh( geometry, material );
-		dots.__instance__dHy = dots.__instance__dHy || new THREE.Mesh( geometry, material );
-		dots.__instance__dPy = dots.__instance__dPy || new THREE.Mesh( geometry, material );
+		dots._obj_dFt = dots._obj_dFt || new THREE.Mesh( geometry, material );
+		dots._obj_dHy = dots._obj_dHy || new THREE.Mesh( geometry, material );
+		dots._obj_dPy = dots._obj_dPy || new THREE.Mesh( geometry, material );
 
-		dots.__instance__dFt.position.set( dots.Ft.x, dots.Ft.y, dots.Ft.z);
-		dots.__instance__dHy.position.set( dots.Ht.x, dots.Ht.y, dots.Ht.z);
-		dots.__instance__dPy.position.set( dots.Pt.x, dots.Pt.y, dots.Pt.z);
+		dots._obj_dFt.position.set( dots.Ft.x, dots.Ft.y, dots.Ft.z);
+		dots._obj_dHy.position.set( dots.Ht.x, dots.Ht.y, dots.Ht.z);
+		dots._obj_dPy.position.set( dots.Pt.x, dots.Pt.y, dots.Pt.z);
 	},
 	_createDotsPlanesProjections: function(){
 
 		var geometry = new THREE.SphereGeometry( 0.5, 20, 20 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
 
-		dots.__instance__dAdFp = dots.__instance__dAdFp || new THREE.Mesh( geometry, material );
-		dots.__instance__dAdHp = dots.__instance__dAdHp || new THREE.Mesh( geometry, material );
-		dots.__instance__dAdPp = dots.__instance__dAdPp || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdFp = dots.__instance__dBdFp || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdHp = dots.__instance__dBdHp || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdPp = dots.__instance__dBdPp || new THREE.Mesh( geometry, material );
+		dots._obj_dAdFp = dots._obj_dAdFp || new THREE.Mesh( geometry, material );
+		dots._obj_dAdHp = dots._obj_dAdHp || new THREE.Mesh( geometry, material );
+		dots._obj_dAdPp = dots._obj_dAdPp || new THREE.Mesh( geometry, material );
+		dots._obj_dBdFp = dots._obj_dBdFp || new THREE.Mesh( geometry, material );
+		dots._obj_dBdHp = dots._obj_dBdHp || new THREE.Mesh( geometry, material );
+		dots._obj_dBdPp = dots._obj_dBdPp || new THREE.Mesh( geometry, material );
 
-		dots.__instance__dAdX = dots.__instance__dAdX || new THREE.Mesh( geometry, material );
-		dots.__instance__dAdY = dots.__instance__dAdY || new THREE.Mesh( geometry, material );
-		dots.__instance__dAdZ = dots.__instance__dAdZ || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdX = dots.__instance__dBdX || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdY = dots.__instance__dBdY || new THREE.Mesh( geometry, material );
-		dots.__instance__dBdZ = dots.__instance__dBdZ || new THREE.Mesh( geometry, material );
+		dots._obj_dAdX = dots._obj_dAdX || new THREE.Mesh( geometry, material );
+		dots._obj_dAdY = dots._obj_dAdY || new THREE.Mesh( geometry, material );
+		dots._obj_dAdZ = dots._obj_dAdZ || new THREE.Mesh( geometry, material );
+		dots._obj_dBdX = dots._obj_dBdX || new THREE.Mesh( geometry, material );
+		dots._obj_dBdY = dots._obj_dBdY || new THREE.Mesh( geometry, material );
+		dots._obj_dBdZ = dots._obj_dBdZ || new THREE.Mesh( geometry, material );
 
-		dots.__instance__dAdFp.position.set( 0, dots.a.y, dots.a.z);
-		dots.__instance__dAdHp.position.set( dots.a.x, 0, dots.a.z);
-		dots.__instance__dAdPp.position.set( dots.a.x, dots.a.y, 0);
+		dots._obj_dAdFp.position.set( 0, dots.a.y, dots.a.z);
+		dots._obj_dAdHp.position.set( dots.a.x, 0, dots.a.z);
+		dots._obj_dAdPp.position.set( dots.a.x, dots.a.y, 0);
 
-		dots.__instance__dBdFp.position.set( 0, dots.b.y, dots.b.z);
-		dots.__instance__dBdHp.position.set( dots.b.x, 0, dots.b.z);
-		dots.__instance__dBdPp.position.set( dots.b.x, dots.b.y, 0);
+		dots._obj_dBdFp.position.set( 0, dots.b.y, dots.b.z);
+		dots._obj_dBdHp.position.set( dots.b.x, 0, dots.b.z);
+		dots._obj_dBdPp.position.set( dots.b.x, dots.b.y, 0);
 
-		dots.__instance__dAdX.position.set(dots.a.x, 0, 0);
-		dots.__instance__dAdY.position.set(0, dots.a.y, 0);
-		dots.__instance__dAdZ.position.set(0, 0, dots.a.z);
-		dots.__instance__dBdX.position.set(dots.b.x, 0, 0);
-		dots.__instance__dBdY.position.set(0, dots.b.y, 0);
-		dots.__instance__dBdZ.position.set(0, 0, dots.b.z);
+		dots._obj_dAdX.position.set(dots.a.x, 0, 0);
+		dots._obj_dAdY.position.set(0, dots.a.y, 0);
+		dots._obj_dAdZ.position.set(0, 0, dots.a.z);
+		dots._obj_dBdX.position.set(dots.b.x, 0, 0);
+		dots._obj_dBdY.position.set(0, dots.b.y, 0);
+		dots._obj_dBdZ.position.set(0, 0, dots.b.z);
 	},
 	_createTraces2AxesProjectionsDots: function(){
 
 		var geometry = new THREE.SphereGeometry( 1, 15, 15 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
 
-		dots.__instance__FtY = dots.__instance__FtY || new THREE.Mesh( geometry, material );
-		dots.__instance__FtZ = dots.__instance__FtZ || new THREE.Mesh( geometry, material );
+		dots._obj_FtY = dots._obj_FtY || new THREE.Mesh( geometry, material );
+		dots._obj_FtZ = dots._obj_FtZ || new THREE.Mesh( geometry, material );
 
-		dots.__instance__HtX = dots.__instance__HtX || new THREE.Mesh( geometry, material );
-		dots.__instance__HtZ = dots.__instance__HtZ || new THREE.Mesh( geometry, material );
+		dots._obj_HtX = dots._obj_HtX || new THREE.Mesh( geometry, material );
+		dots._obj_HtZ = dots._obj_HtZ || new THREE.Mesh( geometry, material );
 
-		dots.__instance__PtY = dots.__instance__PtY || new THREE.Mesh( geometry, material );
-		dots.__instance__PtZ = dots.__instance__PtZ || new THREE.Mesh( geometry, material );
+		dots._obj_PtY = dots._obj_PtY || new THREE.Mesh( geometry, material );
+		dots._obj_PtZ = dots._obj_PtZ || new THREE.Mesh( geometry, material );
 
-		dots.__instance__FtY.position.set( 0, dots.Ft.y, 0);
-		dots.__instance__FtZ.position.set( 0, 0, dots.Ft.z);
+		dots._obj_FtY.position.set( 0, dots.Ft.y, 0);
+		dots._obj_FtZ.position.set( 0, 0, dots.Ft.z);
 
-		dots.__instance__HtX.position.set( dots.Ht.x, 0, 0);
-		dots.__instance__HtZ.position.set( 0, 0, dots.Ht.z);
+		dots._obj_HtX.position.set( dots.Ht.x, 0, 0);
+		dots._obj_HtZ.position.set( 0, 0, dots.Ht.z);
 
-		dots.__instance__PtY.position.set( dots.Pt.x, 0, 0);
-		dots.__instance__PtZ.position.set( 0, dots.Pt.y, 0);
+		dots._obj_PtY.position.set( dots.Pt.x, 0, 0);
+		dots._obj_PtZ.position.set( 0, dots.Pt.y, 0);
 	}
 };
 
@@ -148,7 +152,8 @@ var line = {
 		line._createPTrace();
 		line._createDotsPlanesProjections();
 		line._createLinePlanesProjections();
-		line._createTraces2AxesProjectionsLines();
+		line._createTraces2AxesProjections();
+		line._createLineWithTracesProjections();
 	},
 	_createMainLine: function(){
 		var geometry = new THREE.Geometry();
@@ -163,17 +168,17 @@ var line = {
 			new THREE.Vector3( dots.b.x, dots.b.y, dots.b.z )
 			);
 
-		line.__instance__Line = line.__instance__Line || new THREE.Line( geometry, material );
+		line._obj_Line = line._obj_Line || new THREE.Line( geometry, material );
 
-		line.__instance__Line.geometry.vertices[0].x = dots.a.x;
-		line.__instance__Line.geometry.vertices[0].y = dots.a.y;
-		line.__instance__Line.geometry.vertices[0].z = dots.a.z;
+		line._obj_Line.geometry.vertices[0].x = dots.a.x;
+		line._obj_Line.geometry.vertices[0].y = dots.a.y;
+		line._obj_Line.geometry.vertices[0].z = dots.a.z;
 
-		line.__instance__Line.geometry.vertices[1].x = dots.b.x;
-		line.__instance__Line.geometry.vertices[1].y = dots.b.y;
-		line.__instance__Line.geometry.vertices[1].z = dots.b.z;
+		line._obj_Line.geometry.vertices[1].x = dots.b.x;
+		line._obj_Line.geometry.vertices[1].y = dots.b.y;
+		line._obj_Line.geometry.vertices[1].z = dots.b.z;
 
-		line.__instance__Line.geometry.verticesNeedUpdate = true;
+		line._obj_Line.geometry.verticesNeedUpdate = true;
 	},
 	_calculateLineVector: function() {
 		line.vector.x = dots.b.x - dots.a.x;
@@ -190,18 +195,18 @@ var line = {
 		dots.Ft.y = dots.a.y + line.vector.y * hammaX;
 		dots.Ft.z = dots.a.z + line.vector.z * hammaX;
 
-		line.__instance__lFpIntersection = line.__instance__lFpIntersection || line.__createPlaneIntersection();
+		line._obj_lFpIntersection = line._obj_lFpIntersection || line.__createPlaneIntersection();
 
 		console.log()
-		line.__instance__lFpIntersection.geometry.vertices[0].x = dots.a.x;
-		line.__instance__lFpIntersection.geometry.vertices[0].y = dots.a.y;
-		line.__instance__lFpIntersection.geometry.vertices[0].z = dots.a.z;
+		line._obj_lFpIntersection.geometry.vertices[0].x = dots.a.x;
+		line._obj_lFpIntersection.geometry.vertices[0].y = dots.a.y;
+		line._obj_lFpIntersection.geometry.vertices[0].z = dots.a.z;
 
-		line.__instance__lFpIntersection.geometry.vertices[1].x = dots.Ft.x;
-		line.__instance__lFpIntersection.geometry.vertices[1].y = dots.Ft.y;
-		line.__instance__lFpIntersection.geometry.vertices[1].z = dots.Ft.z;
+		line._obj_lFpIntersection.geometry.vertices[1].x = dots.Ft.x;
+		line._obj_lFpIntersection.geometry.vertices[1].y = dots.Ft.y;
+		line._obj_lFpIntersection.geometry.vertices[1].z = dots.Ft.z;
 
-		line.__instance__lFpIntersection.geometry.verticesNeedUpdate = true;
+		line._obj_lFpIntersection.geometry.verticesNeedUpdate = true;
 	},
 	_createHTrace: function() {
 
@@ -211,17 +216,17 @@ var line = {
 		dots.Ht.x = dots.a.x + line.vector.x * hammaY;
 		dots.Ht.z = dots.a.z + line.vector.z * hammaY;
 
-		line.__instance__lHpIntersection = line.__instance__lHpIntersection || line.__createPlaneIntersection();
+		line._obj_lHpIntersection = line._obj_lHpIntersection || line.__createPlaneIntersection();
 
-		line.__instance__lHpIntersection.geometry.vertices[0].x = dots.a.x;
-		line.__instance__lHpIntersection.geometry.vertices[0].y = dots.a.y;
-		line.__instance__lHpIntersection.geometry.vertices[0].z = dots.a.z;
+		line._obj_lHpIntersection.geometry.vertices[0].x = dots.a.x;
+		line._obj_lHpIntersection.geometry.vertices[0].y = dots.a.y;
+		line._obj_lHpIntersection.geometry.vertices[0].z = dots.a.z;
 
-		line.__instance__lHpIntersection.geometry.vertices[1].x = dots.Ht.x;
-		line.__instance__lHpIntersection.geometry.vertices[1].y = dots.Ht.y;
-		line.__instance__lHpIntersection.geometry.vertices[1].z = dots.Ht.z;
+		line._obj_lHpIntersection.geometry.vertices[1].x = dots.Ht.x;
+		line._obj_lHpIntersection.geometry.vertices[1].y = dots.Ht.y;
+		line._obj_lHpIntersection.geometry.vertices[1].z = dots.Ht.z;
 
-		line.__instance__lHpIntersection.geometry.verticesNeedUpdate = true;
+		line._obj_lHpIntersection.geometry.verticesNeedUpdate = true;
 	},
 	_createPTrace: function() {
 
@@ -231,61 +236,67 @@ var line = {
 		dots.Pt.x = dots.a.x + line.vector.x * hammaZ;
 		dots.Pt.y = dots.a.y + line.vector.y * hammaZ;
 			
-		line.__instance__lPpIntersection = line.__instance__lPpIntersection || line.__createPlaneIntersection();
+		line._obj_lPpIntersection = line._obj_lPpIntersection || line.__createPlaneIntersection();
 
-		line.__instance__lPpIntersection.geometry.vertices[0].x = dots.a.x;
-		line.__instance__lPpIntersection.geometry.vertices[0].y = dots.a.y;
-		line.__instance__lPpIntersection.geometry.vertices[0].z = dots.a.z;
+		line._obj_lPpIntersection.geometry.vertices[0].x = dots.a.x;
+		line._obj_lPpIntersection.geometry.vertices[0].y = dots.a.y;
+		line._obj_lPpIntersection.geometry.vertices[0].z = dots.a.z;
 
-		line.__instance__lPpIntersection.geometry.vertices[1].x = dots.Pt.x;
-		line.__instance__lPpIntersection.geometry.vertices[1].y = dots.Pt.y;
-		line.__instance__lPpIntersection.geometry.vertices[1].z = dots.Pt.z;
+		line._obj_lPpIntersection.geometry.vertices[1].x = dots.Pt.x;
+		line._obj_lPpIntersection.geometry.vertices[1].y = dots.Pt.y;
+		line._obj_lPpIntersection.geometry.vertices[1].z = dots.Pt.z;
 
-		line.__instance__lPpIntersection.geometry.verticesNeedUpdate = true;
+		line._obj_lPpIntersection.geometry.verticesNeedUpdate = true;
 	},
 	_createLinePlanesProjections: function() {
 
-		line.__instance__lAdF = line.__instance__lAdF || line.__createLine2PlaneProjectioHelper();
-		line.__instance__lAdH = line.__instance__lAdH || line.__createLine2PlaneProjectioHelper();
-		line.__instance__lAdP = line.__instance__lAdP || line.__createLine2PlaneProjectioHelper();
+		line._obj_lAdF = line._obj_lAdF || line.__createLine2PlaneProjectioHelper();
+		line._obj_lAdH = line._obj_lAdH || line.__createLine2PlaneProjectioHelper();
+		line._obj_lAdP = line._obj_lAdP || line.__createLine2PlaneProjectioHelper();
 
-		line.__instance__lBdF = line.__instance__lBdF || line.__createLine2PlaneProjectioHelper();
-		line.__instance__lBdH = line.__instance__lBdH || line.__createLine2PlaneProjectioHelper();
-		line.__instance__lBdP = line.__instance__lBdP || line.__createLine2PlaneProjectioHelper();
+		line._obj_lBdF = line._obj_lBdF || line.__createLine2PlaneProjectioHelper();
+		line._obj_lBdH = line._obj_lBdH || line.__createLine2PlaneProjectioHelper();
+		line._obj_lBdP = line._obj_lBdP || line.__createLine2PlaneProjectioHelper();
 
-		line.__setLinePlaneProjections([line.__instance__lAdF, line.__instance__lAdH, line.__instance__lAdP ]);
-		line.__setLinePlaneProjections([line.__instance__lBdF, line.__instance__lBdH, line.__instance__lBdP ]);
+		line.__setLinePlaneProjections([line._obj_lAdF, line._obj_lAdH, line._obj_lAdP ]);
+		line.__setLinePlaneProjections([line._obj_lBdF, line._obj_lBdH, line._obj_lBdP ]);
 	},
 	_createDotsPlanesProjections: function() {
-		line.__instance__lAdFpHelper = line.__instance__lAdFpHelper || line.__createDot2PlaneProjectioHelper(4);
-		line.__instance__lAdHpHelper = line.__instance__lAdHpHelper || line.__createDot2PlaneProjectioHelper(4);
-		line.__instance__lAdPpHelper = line.__instance__lAdPpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lAdFpHelper = line._obj_lAdFpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lAdHpHelper = line._obj_lAdHpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lAdPpHelper = line._obj_lAdPpHelper || line.__createDot2PlaneProjectioHelper(4);
 
-		line.__instance__lBdFpHelper = line.__instance__lBdFpHelper || line.__createDot2PlaneProjectioHelper(4);
-		line.__instance__lBdHpHelper = line.__instance__lBdHpHelper || line.__createDot2PlaneProjectioHelper(4);
-		line.__instance__lBdPpHelper = line.__instance__lBdPpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lBdFpHelper = line._obj_lBdFpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lBdHpHelper = line._obj_lBdHpHelper || line.__createDot2PlaneProjectioHelper(4);
+		line._obj_lBdPpHelper = line._obj_lBdPpHelper || line.__createDot2PlaneProjectioHelper(4);
 
-		line.__setDotPlaneProjections(dots.a, [line.__instance__lAdFpHelper, line.__instance__lAdHpHelper, line.__instance__lAdPpHelper ]);
-		line.__setDotPlaneProjections(dots.b, [line.__instance__lBdFpHelper, line.__instance__lBdHpHelper, line.__instance__lBdPpHelper ]);
+		line.__setDotPlaneProjections(dots.a, [line._obj_lAdFpHelper, line._obj_lAdHpHelper, line._obj_lAdPpHelper ]);
+		line.__setDotPlaneProjections(dots.b, [line._obj_lBdFpHelper, line._obj_lBdHpHelper, line._obj_lBdPpHelper ]);
 	},
-	_createTraces2AxesProjectionsLines: function() {
+	_createTraces2AxesProjections: function() {
 
-		line.__instance__lFtHpHelper = line.__instance__lFtHpHelper || line.__createDot2PlaneProjectioHelper(2);
-		line.__instance__lFtPpHelper = line.__instance__lFtPpHelper || line.__createDot2PlaneProjectioHelper(2);	
+		line._obj_lFtHpHelper = line._obj_lFtHpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line._obj_lFtPpHelper = line._obj_lFtPpHelper || line.__createDot2PlaneProjectioHelper(2);	
 
-		line.__instance__lHtFpHelper = line.__instance__lHtFpHelper || line.__createDot2PlaneProjectioHelper(2);
-		line.__instance__lHtPpHelper = line.__instance__lHtPpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line._obj_lHtFpHelper = line._obj_lHtFpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line._obj_lHtPpHelper = line._obj_lHtPpHelper || line.__createDot2PlaneProjectioHelper(2);
 
-		line.__instance__lPtFpHelper = line.__instance__lPtFpHelper || line.__createDot2PlaneProjectioHelper(2);
-		line.__instance__lPtHpHelper = line.__instance__lPtHpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line._obj_lPtFpHelper = line._obj_lPtFpHelper || line.__createDot2PlaneProjectioHelper(2);
+		line._obj_lPtHpHelper = line._obj_lPtHpHelper || line.__createDot2PlaneProjectioHelper(2);
 		
-		line.__setTrace2PlaneProjections(dots.Ft, [line.__instance__lFtHpHelper, line.__instance__lFtPpHelper]);
-		line.__setTrace2PlaneProjections(dots.Ht, [line.__instance__lHtFpHelper, line.__instance__lHtPpHelper]);
-		line.__setTrace2PlaneProjections(dots.Pt, [line.__instance__lPtFpHelper, line.__instance__lPtHpHelper]);
+		line.__setTrace2PlaneProjections(dots.Ft, [line._obj_lFtHpHelper, line._obj_lFtPpHelper]);
+		line.__setTrace2PlaneProjections(dots.Ht, [line._obj_lHtFpHelper, line._obj_lHtPpHelper]);
+		line.__setTrace2PlaneProjections(dots.Pt, [line._obj_lPtFpHelper, line._obj_lPtHpHelper]);
 
-		line.__setTraces2PlaneProjections();
+		line._obj_lFtHpHelper.geometry.vertices[0].set(0,0,dots.Ft.z);
+		line._obj_lFtPpHelper.geometry.vertices[0].set(0,dots.Ft.y,0);
+
+		line._obj_lHtFpHelper.geometry.vertices[0].set(dots.Ht.x,0,0);
+		line._obj_lHtPpHelper.geometry.vertices[0].set(0,0,dots.Ht.z);
+		
+		line._obj_lPtFpHelper.geometry.vertices[0].set(dots.Pt.x,0,0);
+		line._obj_lPtHpHelper.geometry.vertices[0].set(0,dots.Pt.y,0);
 	},
-
 	__createPlaneIntersection: function() {
 
 		var geometry = new THREE.Geometry();
@@ -408,19 +419,24 @@ var line = {
 			}
 		}
 	},
-	__setTraces2PlaneProjections: function() {
-		console.log(line.__instance__lFtHpHelper.geometry.vertices);
-		line.__instance__lFtHpHelper.geometry.vertices[0].y = 0;
-		// line.__instance__lFtHpHelper.y = 0;
+	_createLineWithTracesProjections: function() {
 
-		// line.__instance__lPpIntersection.geometry.vertices[0].x = dots.a.x;
-		// line.__instance__lPpIntersection.geometry.vertices[0].y = dots.a.y;
-		// line.__instance__lPpIntersection.geometry.vertices[0].z = dots.a.z;
+		line._obj_lLH = line._obj_lLH || line.__createLine2PlaneProjectioHelper();
+		line._obj_lLF = line._obj_lLF || line.__createLine2PlaneProjectioHelper();
+		line._obj_lLP = line._obj_lLP || line.__createLine2PlaneProjectioHelper();
 
-		// line.__instance__lPpIntersection.geometry.vertices[1].x = dots.Pt.x;
-		// line.__instance__lPpIntersection.geometry.vertices[1].y = dots.Pt.y;
-		// line.__instance__lPpIntersection.geometry.vertices[1].z = dots.Pt.z;
+		line._obj_lLH.geometry.vertices[0].set(dots.Pt.x,0,0);
+		line._obj_lLH.geometry.vertices[1].set(dots.Ht.x,dots.Ht.y,dots.Ht.z);
 
+		line._obj_lLF.geometry.vertices[0].set(0,dots.Pt.y,dots.Pt.z);
+		line._obj_lLF.geometry.vertices[1].set(0,dots.Ht.y,dots.Ht.z);
+
+		line._obj_lLP.geometry.vertices[0].set(dots.Pt.x,dots.Pt.y,0);
+		line._obj_lLP.geometry.vertices[1].set(dots.Ht.x,dots.Ht.y,0);
+
+		line._obj_lLH.geometry.verticesNeedUpdate = true;
+		line._obj_lLF.geometry.verticesNeedUpdate = true;
+		line._obj_lLP.geometry.verticesNeedUpdate = true;		
 	}
 }
 
@@ -451,17 +467,17 @@ var axes = {
 		var length = 1000,
 			nullPoint = new THREE.Vector3( 0, 0, 0 );
 
-		axes.__instance__mainAxes = new THREE.Object3D();
-		axes.__instance__mainAxes.name = 'axes';
+		axes._obj_mainAxes = new THREE.Object3D();
+		axes._obj_mainAxes.name = 'axes';
 
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
 
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
 
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
-	    axes.__instance__mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
+	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
 
 	},
 	_createHelperAxes: function(length, step) {
@@ -470,20 +486,20 @@ var axes = {
 			length = 200,
 			color = 0x868686;
 
-		axes.__instance__helperAxes =  new THREE.Object3D();
-		axes.__instance__helperAxes.name = 'axes';
+		axes._obj_helperAxes =  new THREE.Object3D();
+		axes._obj_helperAxes.name = 'axes';
 
 		for (var i = -length; i <= length; i = i + step) {
 			if (i !== 0) {
 				// plane P, Z and X change
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
 				// plane F - Z and Y change
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
 				// plane H - X and Y change
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
-				axes.__instance__helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
+				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
 			}
 		}
 	},	
@@ -529,9 +545,13 @@ $(function() {
 
 	$.each(dots, function(dotName, coords){
 		$.each(coords, function(coordName, coordValue){
-			var id = '#' + dotName + coordName;
-			var $el = $(id);
+			var id = dotName + coordName;
+			var $el = $('#' + id);
+
 			if ($el.length) {
+				
+				$('#' + id + '-value').text(parseInt(eval('dots.' + dotName + '.' + coordName)));
+
 				$el.noUiSlider({
 					start: [ coordValue ],
 					step: 1,
@@ -540,10 +560,13 @@ $(function() {
 						'max': [ 100 ]
 					}
 				})
-				.Link('lower').to($(id + '-value'), null, wNumb( { decimals: 0 } ) )
+				// .Link().to($(id + '-value'), null, wNumb( { decimals: 0 } ) )
 				.on('slide',function(){
 					var id = $(this).attr('id');
 					eval('dots.' + id.substr(0,1) + '.' + id.substr(1,1) + ' = ' + $(this).val() + ';');
+
+					$('#' + id + '-value').text(parseInt($(this).val()));
+
 					line.build();
 					dots.build();
 				});

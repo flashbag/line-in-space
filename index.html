@@ -7,12 +7,20 @@
 	
 	<script src="assets/three.min.js"></script>
 	<script src="assets/OrbitControls.js"></script>
+	<script src="assets/Detector.js"></script>
 	<script src="assets/jquery-1.10.2.js"></script>
 	<script src="assets/jquery.nouislider.min.js"></script>
-	<script src="assets/jquery.liblink.js"></script>
 	<script src="assets/wNumb.min.js"></script>
-	<script src="assets/script.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+	  ga('create', 'UA-54871581-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
 </head>
 <body>
 
@@ -40,16 +48,14 @@
 		</div>
 		<span class="info"></span>
 	</div>
-	
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	  ga('create', 'UA-54871581-1', 'auto');
-	  ga('send', 'pageview');
 
+	<script type="text/javascript">
+	// ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});
+	// gaq.push(['_trackEvent', 'category', 'action', 'opt_label', opt_value, opt_noninteraction]);
 	</script>
+
+	<script src="assets/script.js"></script>
+	<!-- <a href="#" onClick="_gaq.push(['_trackEvent', 'Videos', 'Play', 'Baby\'s First Birthday']);">Play</a> -->
 </body>
 </html>
