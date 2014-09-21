@@ -1,19 +1,11 @@
 var lines = {
 	vector: {},
 	build: function() {
+		processor.calculateLineVector();
+		processor.calculateTraces();
+
 		lines._createMainLine();
-		lines._calculateLineVector();
-		lines._createFTrace();
-		lines._createHTrace();
-		lines._createPTrace();
-
-		dots.pF = { x: 0, y: dots.Ft.y, z: 0 };
-		dots.hF = { x: 0, y: 0, z: dots.Ft.z };
-		dots.pH = { x: dots.Ht.x, y: 0, z: 0 };
-		dots.fH = { x: 0, y: 0, z: dots.Ht.z };
-		dots.hP = { x: dots.Pt.x, y: 0, z: 0 };
-		dots.fP = { x: 0, y: dots.Pt.y, z: 0 };
-
+		lines._createTraces();
 		lines._createDotsPlanesProjections();
 		lines._createLinePlanesProjections();
 		lines._createTraces2AxesProjections();
@@ -44,50 +36,16 @@ var lines = {
 
 		lines._obj_Line.geometry.verticesNeedUpdate = true;
 	},
-	_calculateLineVector: function() {
-		lines.vector.x = dots.b.x - dots.a.x;
-		lines.vector.y = dots.b.y - dots.a.y;
-		lines.vector.z = dots.b.z - dots.a.z;
-
-		lines.vector.hamma = (dots.a.x - dots.b.x) / lines.vector.x;
-	},
-	_createFTrace: function() {
-
-		var hammaX = (dots.a.x * -1) / lines.vector.x;
-
-		dots.Ft.x = 0;
-		dots.Ft.y = dots.a.y + lines.vector.y * hammaX;
-		dots.Ft.z = dots.a.z + lines.vector.z * hammaX;
+	
+	_createTraces: function() {
 
 		lines._obj_lFpIntersection = lines._obj_lFpIntersection || lines.__createPlaneIntersection();
-
-		lines._setTracePosition(lines._obj_lFpIntersection,dots.a,dots.Ft);
-	},
-	_createHTrace: function() {
-
-		var hammaY = (dots.a.y * -1) / lines.vector.y;
-
-		dots.Ht.y = 0;
-		dots.Ht.x = dots.a.x + lines.vector.x * hammaY;
-		dots.Ht.z = dots.a.z + lines.vector.z * hammaY;
-
 		lines._obj_lHpIntersection = lines._obj_lHpIntersection || lines.__createPlaneIntersection();
-
-		lines._setTracePosition(lines._obj_lHpIntersection,dots.a,dots.Ht);
-
-	},
-	_createPTrace: function() {
-
-		var hammaZ = (dots.a.z * -1) / lines.vector.z;
-
-		dots.Pt.z = 0;
-		dots.Pt.x = dots.a.x + lines.vector.x * hammaZ;
-		dots.Pt.y = dots.a.y + lines.vector.y * hammaZ;
-			
 		lines._obj_lPpIntersection = lines._obj_lPpIntersection || lines.__createPlaneIntersection();
 
+		lines._setTracePosition(lines._obj_lFpIntersection,dots.a,dots.Ft);
+		lines._setTracePosition(lines._obj_lHpIntersection,dots.a,dots.Ht);
 		lines._setTracePosition(lines._obj_lPpIntersection,dots.a,dots.Pt);
-
 	},
 	_setTracePosition: function(obj, dot, dotTrace) {
 		obj.geometry.vertices[0].x = dot.x;

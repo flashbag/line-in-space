@@ -9,9 +9,6 @@ var dots = {
 		y: 50,
 		z: 45
 	},
-	Ft: {},
-	Ht: {},
-	Pt: {},
 	build: function() {
 		dots._createMainDots();
 		dots._createLineTraces();
@@ -47,6 +44,23 @@ var dots = {
 
 		var geometry = new THREE.SphereGeometry( 0.5, 20, 20 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xEE0000 } );
+
+		var dotsArray = [
+			'Af','Ap','Ah',
+			'Bf','Bp','Bh',
+
+			'Ax','Ay','Az',
+			'Bx','By','Bz',
+			];
+
+		for (var i = 0; i < dotsArray.length; i++) {
+		    // alert(dotsArray[i]);
+		    dots['_obj_' + dotsArray[i]]  = dots['_obj_' + dotsArray[i]] || new THREE.Mesh( geometry, material );
+		    //Do something
+		    console.log(dots['_obj_' + dotsArray[i]]);
+
+		}
+		console.log(dots);
 
 		dots._obj_dAdFp = dots._obj_dAdFp || new THREE.Mesh( geometry, material );
 		dots._obj_dAdHp = dots._obj_dAdHp || new THREE.Mesh( geometry, material );
@@ -99,7 +113,7 @@ var dots = {
 		dots._obj_PtZ.position.set( dots.fP.x, dots.fP.y, dots.fP.z);
 		
 	},
-	__generateDotGeometry: function(text,size) {
+	__generateDotTextGeometry: function(text,size) {
 
 		var geometry = new THREE.TextGeometry(text, { size : (size ? size : 5), height : 0.3 });
 		
@@ -134,13 +148,19 @@ var dots = {
 	_createDotsTexts: function() {
 
 		// Generating dots texts geometries
-		dots.Atext_geometry = dots.Atext_geometry || dots.__generateDotGeometry('A',7);
-		dots.Btext_geometry = dots.Btext_geometry || dots.__generateDotGeometry('B',7);
-		dots.Fttext_geometry = dots.Fttext_geometry || dots.__generateDotGeometry('F');
-		dots.Httext_geometry = dots.Httext_geometry || dots.__generateDotGeometry('H');
-		dots.Pttext_geometry = dots.Pttext_geometry || dots.__generateDotGeometry('P');
+		dots.Atext_geometry = dots.Atext_geometry || dots.__generateDotTextGeometry('A',7);
+		dots.Btext_geometry = dots.Btext_geometry || dots.__generateDotTextGeometry('B',7);
+		dots.Fttext_geometry = dots.Fttext_geometry || dots.__generateDotTextGeometry('F');
+		dots.Httext_geometry = dots.Httext_geometry || dots.__generateDotTextGeometry('H');
+		dots.Pttext_geometry = dots.Pttext_geometry || dots.__generateDotTextGeometry('P');
 
-		dots.pFtext_geometry = dots.pFtext_geometry || dots.__generateDotGeometry('pF',4);
+		dots.pFtext_geometry = dots.pFtext_geometry || dots.__generateDotTextGeometry('pF',4);
+		dots.hFtext_geometry = dots.hFtext_geometry || dots.__generateDotTextGeometry('hF',4);
+		dots.pHtext_geometry = dots.pHtext_geometry || dots.__generateDotTextGeometry('pH',4);
+
+		dots.fHtext_geometry = dots.fHtext_geometry || dots.__generateDotTextGeometry('fH',4);
+		dots.hPtext_geometry = dots.hPtext_geometry || dots.__generateDotTextGeometry('hP',4);
+		dots.fPtext_geometry = dots.fPtext_geometry || dots.__generateDotTextGeometry('fP',4);
 
 		// Generating dots texts meshes
 		dots._obj_Atext = dots._obj_Atext || dots.__generateDotMesh(dots.Atext_geometry,dots.a);
@@ -150,8 +170,12 @@ var dots = {
 		dots._obj_Pttext = dots._obj_Pttext || dots.__generateDotMesh(dots.Pttext_geometry,dots.Pt, 0x444444);
 
 		dots._obj_pFtext = dots._obj_pFtext || dots.__generateDotMesh(dots.pFtext_geometry,dots.pF, 0x444444);
+		dots._obj_hFtext = dots._obj_hFtext || dots.__generateDotMesh(dots.hFtext_geometry,dots.hF, 0x444444);
+		dots._obj_pHtext = dots._obj_pHtext || dots.__generateDotMesh(dots.pHtext_geometry,dots.pH, 0x444444);
+		dots._obj_fHtext = dots._obj_fHtext || dots.__generateDotMesh(dots.fHtext_geometry,dots.fH, 0x444444);
+		dots._obj_hPtext = dots._obj_hPtext || dots.__generateDotMesh(dots.hPtext_geometry,dots.hP, 0x444444);
+		dots._obj_fPtext = dots._obj_fPtext || dots.__generateDotMesh(dots.fPtext_geometry,dots.fP, 0x444444);
 
-		
 		// Setting dots texts meshes positions
 		dots._setDotTextPosition(dots.a,dots._obj_Atext, dots.Atext_geometry);
 		dots._setDotTextPosition(dots.b,dots._obj_Btext, dots.Btext_geometry);
@@ -160,5 +184,11 @@ var dots = {
 		dots._setDotTextPosition(dots.Pt,dots._obj_Pttext, dots.Pttext_geometry);
 
 		dots._setDotTextPosition(dots.pF,dots._obj_pFtext, dots.pFtext_geometry);
+		dots._setDotTextPosition(dots.pF,dots._obj_pFtext, dots.pFtext_geometry);
+		dots._setDotTextPosition(dots.hF,dots._obj_hFtext, dots.hFtext_geometry);
+		dots._setDotTextPosition(dots.pH,dots._obj_pHtext, dots.pHtext_geometry);
+		dots._setDotTextPosition(dots.fH,dots._obj_fHtext, dots.fHtext_geometry);
+		dots._setDotTextPosition(dots.hP,dots._obj_hPtext, dots.hPtext_geometry);
+		dots._setDotTextPosition(dots.fP,dots._obj_fPtext, dots.fPtext_geometry);
 	}
 };

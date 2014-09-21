@@ -48,6 +48,45 @@ var draw = function(objectName) {
 	}
 };
 
+var processor = {
+	calculateLineVector: function() {
+		lines.vector.x = dots.b.x - dots.a.x;
+		lines.vector.y = dots.b.y - dots.a.y;
+		lines.vector.z = dots.b.z - dots.a.z;
+
+		lines.vector.hamma = (dots.a.x - dots.b.x) / lines.vector.x;
+	},
+	calculateTraces: function() {
+		var hammaX = (dots.a.x * -1) / lines.vector.x;
+		var hammaY = (dots.a.y * -1) / lines.vector.y;
+		var hammaZ = (dots.a.z * -1) / lines.vector.z;
+
+		dots.Ft = {
+			x : 0,
+			y : dots.a.y + lines.vector.y * hammaX,
+			z : dots.a.z + lines.vector.z * hammaX
+		}
+
+		dots.Ht = {
+			x : dots.a.x + lines.vector.x * hammaY,
+			y : 0,
+			z : dots.a.z + lines.vector.z * hammaY
+		}
+
+		dots.Pt = {
+			x : dots.a.x + lines.vector.x * hammaZ,
+			y : dots.a.y + lines.vector.y * hammaZ,
+			z : 0
+		}
+
+		dots.pF = { x: 0, y: dots.Ft.y, z: 0 };
+		dots.hF = { x: 0, y: 0, z: dots.Ft.z };
+		dots.pH = { x: dots.Ht.x, y: 0, z: 0 };
+		dots.fH = { x: 0, y: 0, z: dots.Ht.z };
+		dots.hP = { x: dots.Pt.x, y: 0, z: 0 };
+		dots.fP = { x: 0, y: dots.Pt.y, z: 0 };
+	}
+}
 
 $(function() {
 
