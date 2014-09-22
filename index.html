@@ -3,26 +3,26 @@
 	<title>Line in Space - 3D WebGL Implementation</title>
 	
 	<link rel="stylesheet" href="assets/css/jquery.nouislider.css">
+	<link rel="stylesheet" href="assets/css/jquery.tree.min.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	
 	<script src="assets/jquery/jquery-1.10.2.js"></script>
+	<script src="assets/jquery/jquery-ui-1.10.1.js"></script>
 	<script src="assets/jquery/jquery.nouislider.min.js"></script>
+	<script src="assets/jquery/jquery.tree.min.js"></script>
 
 	<script src="assets/three/three.min.js"></script>
 	<script src="assets/three/OrbitControls.js"></script>
 	<script src="assets/three/Detector.js"></script>
 	<script src="assets/three/helvetiker_regular.typeface.js"></script>
-
 	<script src="assets/three/THREEx.WindowResize.js"></script>
 	
-
 	<script src="assets/axes.js"></script>
 	<script src="assets/dots.js"></script>
 	<script src="assets/lines.js"></script>
 
 	<script src="assets/script.js"></script>
 
-	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -39,23 +39,58 @@
 	<div id="controls">
 		<h1>Line in Space</h1>
 
-		<div class="dots">
+		<div class="controls-inner">
 			<div>
-				<span class="dot-name" data-class="dot-controls-a">A</span>
+				<span class="label dot" data-class="dot-controls-a">A</span>
 			</div>
 			<div>
-				<span class="dot-name" data-class="dot-controls-b">B</span>
+				<span class="label visibility" data-class="visibility-controls">&#9881;</span>
 			</div>
+			<div>
+				<span class="label dot" data-class="dot-controls-b">B</span>
+			</div>
+
 			<div class="clear"></div>
-			<div class="dot-controls dot-controls-a">
+
+			<div class="controls dot-controls-a">
 				<span class="name">X</span><div id="Ax"></div><span class="value" id="Ax-value"></span><div class="clear"></div>
 				<span class="name">Y</span><div id="Ay"></div><span class="value" id="Ay-value"></span><div class="clear"></div>
 				<span class="name">Z</span><div id="Az"></div><span class="value" id="Az-value"></span><div class="clear"></div>
 			</div>
-			<div class="dot-controls dot-controls-b">
+			<div class="controls dot-controls-b">
 				<span class="name">X</span><div id="Bx"></div><span class="value" id="Bx-value"></span><div class="clear"></div>
 				<span class="name">Y</span><div id="By"></div><span class="value" id="By-value"></span><div class="clear"></div>
 				<span class="name">Z</span><div id="Bz"></div><span class="value" id="Bz-value"></span><div class="clear"></div>
+			</div>
+			<div class="controls visibility-controls">
+				<ul id="visibility">
+					<li>
+						<span><h3><input type="checkbox">Axes</h3></span>
+						<ul>
+							<li data-object="mainAxes"><input type="checkbox"><span>Main axes</span>
+							<li data-object="helperAxes"><input type="checkbox"><span>Helper axes</span>
+						</ul>
+					</li>
+					<li>
+						<span><h3><input type="checkbox">Dots</h3></span>
+						<ul>
+							<li data-object="A,B,Atext,Btext"><input type="checkbox"><span>Main dots</span></li>
+							<li data-object="F,H,P,Ftext,Htext,Ptext"><input type="checkbox"><span>Line Traces Dots</span></li>
+							<li data-object="pF,hF,pH,fH,hP,fP,pFtext,hFtext,pHtext,fHtext,hPtext,fPtext"><input type="checkbox"><span>Traces Projections</span></li>
+						</ul>
+					</li>
+					<li>
+						<span><h3><input type="checkbox">Lines</h3></span>
+						<ul>
+							<li data-object="AB"><input type="checkbox"><span>Main line</span></li>
+							<li data-object="AF,AH,AP"><input type="checkbox"><span>Line Traces</span></li>
+							<li data-object="HpH,HfH,PfP,PhP,FpF,FhF"><input type="checkbox"><span>Traces Projections</span></li>
+							<li data-object="AAf,AAp,AAh,BBf,BBp,BBh,AfAy,AfAz,ApAy,ApAx,AhAx,AhAz,BfBy,BfBz,BpBy,BpBx,BhBx,BhBz"><input type="checkbox"><span>Dots Projections</span></li>
+							<li data-object="AfBf,ApBp,AhBh,HhP,HhF,FfP,FfH,PfP,PpH"><input type="checkbox"><span>Line &amp; Traces Projections</span></li>
+						</ul>
+					</li>
+				</ul>
+				
 			</div>
 		</div>
 		<span class="info"></span>

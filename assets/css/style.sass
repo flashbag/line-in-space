@@ -27,14 +27,13 @@ canvas
 		margin-top: 5px
 		margin-bottom: 5px
 		text-align: center
-	.dots
-		.dot-name
+	.controls-inner
+		.label
 			display: inline-block
 			text-align: center
 			box-sizing: border-box
 			float: left
-			width: 46%
-			font-size: 18pt
+			font-size: 18pt 
 			background: #F3F3F3
 			margin: 2%
 			border: 1px solid #F3F3F3
@@ -43,7 +42,11 @@ canvas
 				border: 1px solid #000
 			&.active
 				background: #fff
-		.dot-controls
+			&.dot
+				width: 39%
+			&.visibility
+				width: 10%
+		.controls
 			display: none
 			border: 1px solid #000
 			padding: 20px
@@ -55,12 +58,12 @@ canvas
 			overflow: hidden
 			.name
 				position: relative
-				top: 17px
+				top: 12px
 				right: 17px
 			.value
 				position: relative
 				left: 104%
-				top: -17px
+				top: -11px
 			&:before 
 				content: ""
 				width: 15px
@@ -74,9 +77,21 @@ canvas
 				box-shadow: inset 0 1px 0 #fff
 				transform: rotate(-45deg)
 			&.dot-controls-a:before
-				margin-left: 29px
+				margin-left: 19px
 			&.dot-controls-b:before
-				margin-left: 179px
+				margin-left: 189px
+			&.visibility-controls
+				padding: 10px
+				ul
+					list-style: none
+					padding-left: 13px
+					li 
+						span
+							cursor: pointer
+							input
+								width: 20px
+				&:before
+					margin-left: 41.5%
 			input 
 				width: 50px
 

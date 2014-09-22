@@ -1,9 +1,3 @@
-if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
 var scene, camera, controls, renderer;
 var objects = [];
 
@@ -15,12 +9,13 @@ var init = function() {
 	camera.position.set(175,105,175);
 
 	controls = new THREE.OrbitControls( camera );
-	controls.addEventListener('change', function(){
-		// console.log(camera.rotation.y * 180 / Math.PI );
-		// console.log(camera.rotation.y);
-		// dots.rotateDotsTexts();
-		dots.rotateTexts();
-	});
+	if (window.chrome) {
+		controls.addEventListener('change', function(){
+			// console.log(camera.rotation.y * 180 / Math.PI );
+			// console.log(camera.rotation.y);
+			dots.rotateTexts();
+		});
+	}
 };
 
 var render = function() {
@@ -29,7 +24,7 @@ var render = function() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 
 	THREEx.WindowResize(renderer, camera);
-// 
+
 	document.body.appendChild(renderer.domElement);
 	var r = function() {
 		requestAnimationFrame(r);
@@ -62,7 +57,6 @@ var calculate = function() {
 	dots.Ah = { x: dots.A.x, y: 0, z: dots.A.z };
 	dots.Ap = { x: dots.A.x, y: dots.A.y, z: 0 };
 
-
 	dots.Bf = { x: 0, y: dots.B.y, z: dots.B.z };
 	dots.Bh = { x: dots.B.x, y: 0, z: dots.B.z };
 	dots.Bp = { x: dots.B.x, y: dots.B.y, z: 0 };
@@ -89,6 +83,8 @@ var calculate = function() {
 
 $(function() {
 
+	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
 	init();
 
 	calculate();
@@ -99,7 +95,7 @@ $(function() {
 	
 	draw();
 	render();
-
+	
 	$('#controls')
 		.mouseenter(function() {
 			controls.enabled = false;
@@ -109,17 +105,30 @@ $(function() {
 			controls.enabled = true;
 			controls.rotate = true;
 
-			$('.dot-name').removeClass('active');
-			$('.dot-controls').hide();		
+			$('.label').removeClass('active');
+			$('.controls').hide();		
 		});
 
-	$('.dots .dot-name').click(function(){
+	$('#controls .controls-inner .label').click(function(){
 
-		$('.dot-name').removeClass('active');
-		$('.dot-controls').hide();		
+		$('.label').removeClass('active');
+		$('.controls').hide();		
 		
 		$(this).addClass('active');
 		$('.' + $(this).data('class')).show();
+	});
+
+	$('#visibility').tree();
+	$('#visibility').tree('checkAll');
+	
+	$('#visibility li ul li input').on('change',function(){
+		$.each($('#visibility li ul li input'),function(k,v){
+			if ((obj = $(v).parent().data('object'))!= '') {
+				$.each(obj.split(','),function(kk,vv){
+					objects[vv].visible = $(v).is(':checked');
+				});
+			}
+		});		
 	});
 
 	$.each(dots, function(dotName, coords){
@@ -139,7 +148,6 @@ $(function() {
 						'max': [ 100 ]
 					}
 				})
-				// .Link().to($(id + '-value'), null, wNumb( { decimals: 0 } ) )
 				.on('slide',function(){
 					var id = $(this).attr('id');
 					eval('dots.' + id.substr(0,1) + '.' + id.substr(1,1) + ' = ' + $(this).val() + ';');

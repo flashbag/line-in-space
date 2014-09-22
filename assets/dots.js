@@ -12,8 +12,10 @@ var dots = {
 	build: function() {
 		dots._drawDots( ['A', 'B'], 1.5, 0x19718A);
 		dots._drawDots( ['F', 'H', 'P'], 1.2, 0xEE0000);
+		
 		dots._drawDots( ['Ax','Ay','Az','Bx','By','Bz'], 0.5, 0xEE0000);
 		dots._drawDots( ['Af','Ap','Ah','Bf','Bp','Bh'], 0.5, 0xEE0000);
+
 		dots._drawDots( ['pF','hF','pH','fH','hP','fP'], 0.5, 0xEE0000);
 		dots._drawDots( ['pF', 'hF', 'pH', 'fH', 'hP', 'fP'], 1, 0x00AA00);
 
