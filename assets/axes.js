@@ -25,17 +25,16 @@ var axes = {
 		var length = 1000,
 			nullPoint = new THREE.Vector3( 0, 0, 0 );
 
-		axes._obj_mainAxes = new THREE.Object3D();
-		axes._obj_mainAxes.name = 'axes';
+		objects['mainAxes'] = new THREE.Object3D();
+		
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
 
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( length, 0, 0 ), axes.x.color ) ); // +X
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( -length, 0, 0 ), axes.x.color ) ); // -X
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
 
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, length, 0 ), axes.y.color ) ); // +Y
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, -length, 0 ), axes.y.color ) ); // -Y
-
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
-	    axes._obj_mainAxes.add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, length ), axes.z.color ) ); // +Z
+	    objects['mainAxes'].add( axes._createSingleAxe( nullPoint, new THREE.Vector3( 0, 0, -length ), axes.z.color ) ); // -Z
 
 	},
 	_createHelperAxes: function(length, step) {
@@ -44,20 +43,19 @@ var axes = {
 			length = 200,
 			color = 0x868686;
 
-		axes._obj_helperAxes =  new THREE.Object3D();
-		axes._obj_helperAxes.name = 'axes';
+		objects['helperAxes'] =  new THREE.Object3D();
 
 		for (var i = -length; i <= length; i = i + step) {
 			if (i !== 0) {
 				// plane P, Z and X change
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( -length, i, 0 ), new THREE.Vector3( length, i, 0 ), color, 1 ) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( i, -length, 0 ), new THREE.Vector3( i, length, 0 ), color, 1 ) );
 				// plane F - Z and Y change
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( 0, i, -length ), new THREE.Vector3( 0, i, length ), color, 1) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( 0, -length, i ), new THREE.Vector3( 0, length, i), color, 1) );
 				// plane H - X and Y change
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
-				axes._obj_helperAxes.add( axes._createSingleAxe( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( i, 0, -length ), new THREE.Vector3( i, 0, length ), color, 1) );
+				objects['helperAxes'].add( axes._createSingleAxe( new THREE.Vector3( -length, 0, i ), new THREE.Vector3( length, 0, i), color, 1) );
 			}
 		}
 	},	
