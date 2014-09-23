@@ -116,42 +116,44 @@ canvas {
   padding: 10px;
 }
 /* line 85, style.sass */
-#controls .controls-inner .controls.visibility-controls ul {
+#controls .controls-inner .controls.visibility-controls ul#visibility {
   list-style: none;
   padding-left: 13px;
 }
-/* line 89, style.sass */
-#controls .controls-inner .controls.visibility-controls ul li span {
-  cursor: pointer;
+/* line 88, style.sass */
+#controls .controls-inner .controls.visibility-controls ul#visibility li {
+  line-height: 30px;
+  margin-left: 30px;
 }
 /* line 91, style.sass */
-#controls .controls-inner .controls.visibility-controls ul li span input {
-  width: 20px;
+#controls .controls-inner .controls.visibility-controls ul#visibility li label.css-label {
+  padding-left: 30px;
+  font-size: 20px;
 }
-/* line 93, style.sass */
+/* line 94, style.sass */
 #controls .controls-inner .controls.visibility-controls:before {
   margin-left: 41.5%;
 }
-/* line 95, style.sass */
+/* line 96, style.sass */
 #controls .controls-inner .controls input {
   width: 50px;
 }
 
-/* line 100, style.sass */
+/* line 101, style.sass */
 .dot-controls .name {
   top: 12px !important;
 }
 
-/* line 102, style.sass */
+/* line 103, style.sass */
 .dot-controls .value {
   top: -12px !important;
 }
 
-/* line 104, style.sass */
+/* line 105, style.sass */
 .noUi-horizontal {
   height: 5px;
 }
-/* line 106, style.sass */
+/* line 107, style.sass */
 .noUi-horizontal .noUi-handle {
   width: 20px;
   height: 15px;
@@ -161,7 +163,7 @@ canvas {
   box-shadow: none;
   border: 1px solid #888888;
 }
-/* line 114, style.sass */
+/* line 115, style.sass */
 .noUi-horizontal .noUi-handle:before, .noUi-horizontal .noUi-handle:after {
   content: "";
   display: block;
@@ -172,30 +174,30 @@ canvas {
   left: 6px;
   top: 3px;
 }
-/* line 123, style.sass */
+/* line 124, style.sass */
 .noUi-horizontal .noUi-handle:after {
   left: 12px;
 }
 
-/* line 128, style.sass */
+/* line 129, style.sass */
 #ax .noUi-handle, #bx .noUi-handle {
   border-color: #bb0000;
   background: #bb0000;
 }
 
-/* line 131, style.sass */
+/* line 132, style.sass */
 #ay .noUi-handle, #by .noUi-handle {
   border-color: #0000bb;
   background: #0000bb;
 }
 
-/* line 134, style.sass */
+/* line 135, style.sass */
 #az .noUi-handle, #bz .noUi-handle {
   border-color: #00bb00;
   background: #00bb00;
 }
 
-/* line 138, style.sass */
+/* line 139, style.sass */
 .slider-wrapper {
   width: 80%;
   text-align: center;
