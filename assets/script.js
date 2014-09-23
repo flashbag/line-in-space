@@ -117,18 +117,13 @@ $(function() {
 		$(this).addClass('active');
 		$('.' + $(this).data('class')).show();
 	});
-
-	$('#visibility').tree();
-	$('#visibility').tree('checkAll');
-	
-	$('#visibility li ul li input').on('change',function(){
-		$.each($('#visibility li ul li input'),function(k,v){
-			if ((obj = $(v).parent().data('object'))!= '') {
-				$.each(obj.split(','),function(kk,vv){
-					objects[vv].visible = $(v).is(':checked');
-				});
-			}
-		});		
+	$('ul#visibility li input').click(function(){
+		var $self = $(this);
+		if ((obj = $self.parent().data('object'))!= '') {
+			$.each(obj.split(','),function(kk,vv){
+				objects[vv].visible = $self.is(':checked');
+			});
+		}	
 	});
 
 	$.each(dots, function(dotName, coords){
