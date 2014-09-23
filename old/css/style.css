@@ -1,0 +1,56 @@
+body {
+	font-family: Arial;
+}
+
+table {
+	width: 90%;
+	border: 1px solid #aaa;
+	background-color: #fff;
+	border-collapse: collapse;
+	margin-top: 4%;
+}
+
+tr td {
+	border: 1px solid #444;
+}
+
+td.gdimg { background-color: #fff; }
+
+input {
+	font-size: 20px;
+}
+
+label {
+	font-size: 20px;
+}
+
+input[type="submit"] {
+	border:0px solid #fff;
+	width:100%;
+	height:100%;
+	font-size:150%;
+	color: #121212;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	text-decoration: underline;
+	background-color: #CCBEFF;
+}
+
+#faq_btn {
+	border:0px solid #688bb0;
+	width:100%;
+	display: table-cell;
+	height:100%;
+	font-size:150%;
+	color: #121212;
+	background-color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#faq_btn:hover {
+	text-decoration: underline;
+}
