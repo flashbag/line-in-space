@@ -117,6 +117,7 @@ $(function() {
 		$(this).addClass('active');
 		$('.' + $(this).data('class')).show();
 	});
+
 	$('ul#visibility li input').click(function(){
 		var $self = $(this);
 		if ((obj = $self.parent().data('object'))!= '') {
@@ -124,6 +125,11 @@ $(function() {
 				objects[vv].visible = $self.is(':checked');
 			});
 		}	
+	});
+
+	$('span.label').click(function(){
+		console.log('sdf');
+		ga('send', 'event', 'User', 'Click', 'Label', $(this).data('class'));
 	});
 
 	$.each(dots, function(dotName, coords){
