@@ -20,7 +20,7 @@ var init = function() {
 
 var render = function() {
 	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColor( 0xd9d9d9 );
+	renderer.setClearColor( 0xffffff );
 	renderer.setSize(window.innerWidth, window.innerHeight);
 
 	THREEx.WindowResize(renderer, camera);
